@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 4,
   "rules": [
     {
       "domain_suffix": [
@@ -11,16 +11,30 @@
         "oaistatic.com",
         "oaiusercontent.com",
         "openai.com",
-        "oaistatsig.com",
-        "openaimerge.com",
-        "workos.com",
-        "workoscdn.com",
-        "cloudflare.com",
-        "stripe.com",
-        "sentry.io",
-        "datadoghq.com",
-        "apple.com",
-        "imgix.net"
+        "oaistatsig.com"
+      ],
+      "domain": [
+        "android.chat.openai.com",
+        "auth0.openai.com",
+        "cdn.openaimerge.com",
+        "cdn.workos.com",
+        "challenges.cloudflare.com",
+        "chat.openai.com",
+        "desktop.chat.openai.com",
+        "forwarder.workos.com",
+        "humb.apple.com",
+        "images.workoscdn.com",
+        "ios.chat.openai.com",
+        "js.intercomcdn.com",
+        "js.stripe.com",
+        "o207216.ingest.sentry.io",
+        "o33249.ingest.sentry.io",
+        "rum.browser-intake-datadoghq.com",
+        "setup.auth.openai.com",
+        "setup.workos.com",
+        "tcr9i.chat.openai.com",
+        "workos.imgix.net",
+        "ws.chatgpt.com"
       ]
     }
   ]
