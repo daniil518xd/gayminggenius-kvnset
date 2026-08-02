@@ -1,0 +1,72 @@
+name: Build and publish rule-set
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - rules/my_services.json
+      - .github/workflows/build-ruleset-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ruleset-release
+  cancel-in-progress: true
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest sing-box
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG="$(curl -fsSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name')"
+          VERSION="${TAG#v}"
+          ARCHIVE="sing-box-${VERSION}-linux-amd64.tar.gz"
+          URL="https://github.com/SagerNet/sing-box/releases/download/${TAG}/${ARCHIVE}"
+
+          echo "Using sing-box ${TAG}"
+          curl -fL "$URL" -o /tmp/sing-box.tar.gz
+          tar -xzf /tmp/sing-box.tar.gz -C /tmp
+          install -m 0755 "/tmp/sing-box-${VERSION}-linux-amd64/sing-box" /usr/local/bin/sing-box
+          sing-box version
+
+      - name: Compile rule-set
+        shell: bash
+        run: |
+          set -euo pipefail
+          sing-box rule-set compile \
+            --output my_services.srs \
+            rules/my_services.json
+          test -s my_services.srs
+          sha256sum my_services.srs
+
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG="rules-latest"
+          TITLE="Latest routing rules"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" my_services.srs --clobber
+            gh release edit "$TAG" \
+              --title "$TITLE" \
+              --notes "Automatically compiled from rules/my_services.json at commit $GITHUB_SHA."
+          else
+            gh release create "$TAG" my_services.srs \
+              --target "$GITHUB_SHA" \
+              --title "$TITLE" \
+              --notes "Automatically compiled from rules/my_services.json at commit $GITHUB_SHA."
+          fi
