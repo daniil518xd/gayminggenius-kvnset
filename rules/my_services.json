@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "auth.openai.com",
+        "chatgpt.com",
+        "ct.sendgrid.net",
+        "intercom.io",
+        "intercomcdn.com",
+        "oaistatic.com",
+        "oaiusercontent.com",
+        "openai.com",
+        "oaistatsig.com",
+        "openaimerge.com",
+        "workos.com",
+        "workoscdn.com",
+        "cloudflare.com",
+        "stripe.com",
+        "sentry.io",
+        "datadoghq.com",
+        "apple.com",
+        "imgix.net"
+      ]
+    }
+  ]
+}
