@@ -72,7 +72,10 @@
         "gvt1.com",
         "gvt2.com",
         "gvt3.com",
-        "appspot.com"
+        "appspot.com",
+        "last.fm",
+        "audioscrobbler.com",
+        "lastfm.freetls.fastly.net"
       ],
       "domain": [
         "android.chat.openai.com",
@@ -109,7 +112,10 @@
         "cloudresourcemanager.googleapis.com",
         "oauth2.googleapis.com",
         "securetoken.googleapis.com",
-        "identitytoolkit.googleapis.com"
+        "identitytoolkit.googleapis.com",
+        "ws.audioscrobbler.com",
+        "last.fm",
+        "www.last.fm"
       ]
     }
   ]
